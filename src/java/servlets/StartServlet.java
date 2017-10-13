@@ -1,6 +1,7 @@
 
 package servlets;
 
+import JavaBeans.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -19,30 +20,45 @@ public class StartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().setAttribute("message", "");
+        request.getSession().setAttribute("success", "");
+        request.getSession().setAttribute("newUserMessage", "");
+        request.getSession().setAttribute("exit", "");
         response.sendRedirect(request.getContextPath() + "/sign-in");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {     
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+            throws ServletException, IOException {  
+        request.setCharacterEncoding("UTF-8");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
         System.out.println(username);
         System.out.println(password);
-        Map<String, String> messages = new HashMap<String, String>();
+        //Map<String, String> messages = new HashMap<String, String>();
+        String message = new String();
 
-        if (username == null || username.isEmpty()) {
-            messages.put("username", "Please enter username");
+        User user = new User("Sergei123", "123123Qw");
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            message = "Необходимо ввести учётные данные";
+            //messages.put("username", "Please enter username");
+        } else if(!(username.equals(user.getUsername())) || !(password.equals(user.getPassword()))) {
+            message = "Имя пользователя и пароль не подходят";
         }
 
-        if (password == null || password.isEmpty()) {
+        /* if (password == null || password.isEmpty()) {
             messages.put("password", "Please enter password");
-        }
-
-        if (messages.isEmpty()) {
+        }*/
+        
+        if(message.isEmpty()) {
             request.getSession().setAttribute("username", username);
             response.sendRedirect(request.getContextPath() + "/welcome");
         }
+
+        /*if (messages.isEmpty()) {
+            request.getSession().setAttribute("username", username);
+            response.sendRedirect(request.getContextPath() + "/welcome");
+        }*/
         /*if (messages.isEmpty()) {
             System.out.println();
 
@@ -55,11 +71,12 @@ public class StartServlet extends HttpServlet {
             }  
         }*/
         else {
+            request.getSession().setAttribute("message", message);
             response.sendRedirect(request.getContextPath() + "/sign-in");
+            }
+            //request.setAttribute("messages", messages);
             //request.getRequestDispatcher("/pages/signIn.jsp").forward(request, response);
-            request.setAttribute("messages", messages);
-        }
-        
+
     }
 }
 

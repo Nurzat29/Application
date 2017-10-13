@@ -1,7 +1,6 @@
 
 package servlets;
 
-import check.CheckUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SignUpServlet extends HttpServlet {
+public class ExitServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -18,10 +17,10 @@ public class SignUpServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpServlet</title>");            
+            out.println("<title>Servlet ExitServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ExitServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -30,12 +29,14 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/pages/signUp.jsp").forward(request, response);
+        request.getSession().setAttribute("exit", "Вы вышли из приложения");
+        response.sendRedirect(request.getContextPath() + "/sign-in");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
 
     @Override

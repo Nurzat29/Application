@@ -9,7 +9,7 @@
     <body>
         <h1>Добрый день, <%= request.getSession().getAttribute("username") %> 
         !</h1> 
-        <form action="StartServlet">
+        <form action="ExitServlet">
             <input type="submit" value="Выйти">
         </form>
     </body>
