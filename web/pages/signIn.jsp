@@ -1,4 +1,5 @@
 
+<%@page import="check.MyCookies"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,18 +8,25 @@
         <title>Вход</title>
     </head>
     <body>
-        <p><%= request.getSession().getAttribute("message") %>
+        <p style="color: red">
+           <%= request.getSession().getAttribute("message") %>
+        </p>
            <%= request.getSession().getAttribute("success")%>
+        <p style="color: green">
            <%= request.getSession().getAttribute("exit")%>
+        </p>
            <% request.getSession().setAttribute("message", "");%>
            <% request.getSession().setAttribute("success", "");%>
            <% request.getSession().setAttribute("exit", "");%>
-        </p>
         
         <form action="StartServlet" method="POST">
-            Имя пользователя<input type="text" name="username">
+            <% Cookie cookies[] = request.getCookies(); %>
+            <% System.out.println("cookie name:" + cookies[1].getName()); %>
+            <% if(cookies[1].getName().equals("username")) { MyCookies.setCookie(cookies[1].getValue()); System.out.println("MyCookie:" + MyCookies.getCookie()); } %>
+            <% System.out.println("This cookie: " + cookies[1].getValue()); %>
+            Имя пользователя <input type="text" name="username" value="<%= MyCookies.getCookie() %>">
             <a href="<%= request.getContextPath() %>/sign-up">Регистрация</a>
-            <p>Пароль<input type="text" name="password"></p>
+            <p>Пароль <input type="password" name="password"></p>
             <input type="submit" value="Войти">
         </form>
     </body>

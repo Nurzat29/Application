@@ -7,13 +7,13 @@
         <title>Регистрация</title>
     </head>
     <body> 
-        <p><%= request.getSession().getAttribute("newUserMessage") %>
+        <p style="color:red"><%= request.getSession().getAttribute("newUserMessage") %>
            <% request.getSession().setAttribute("newUserMessage", ""); %>
         </p>
         <form action="CheckNewUserServlet" method="POST">
-            Имя пользователя<input type="text" name="username">
-            <p>Пароль<input type="password" name="password"</p>
-            <p>Повтор пароля<input type="password" name="repeatPassword"></p>
+            Имя пользователя <input type="text" name="username">
+            <p>Пароль <input type="password" name="password"</p>
+            <p>Повтор пароля <input type="password" name="repeatPassword"></p>
             <p><input type="submit" value="Зарегистрироваться"</p>
         </form>
     </body>
